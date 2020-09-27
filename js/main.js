@@ -1,63 +1,76 @@
-const map = document.querySelector(`.map`);
-
-map.classList.remove(`map--faded`);
-
+const mapElement = document.querySelector(`.map`);
+const pinTemplateElement = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
+const mapPinsElement = document.querySelector(`.map__pins`);
 const ROOMS_TYPE = [`palace`, `flat`, `house`, `bungalow`];
 const FEATURES = [`wifi`, `dishwasher`, `parking`, `washer`, `elevator`, `conditioner`];
 const PHOTOS = [`http://o0.github.io/assets/images/tokyo/hotel1.jpg`, `http://o0.github.io/assets/images/tokyo/hotel2.jpg`, `http://o0.github.io/assets/images/tokyo/hotel3.jpg`];
 const NUMBERS_AVATAR = [`01`, `02`, `03`, `04`, `05`, `06`, `07`, `08`];
+const PIN_WIDTH = 40 / 2;
+const PIN_HEIGHT = 40;
+const pins = [];
 
-const getRandom = function (max) {
+const getRandomNumber = function (max) {
   return Math.floor(Math.random() * Math.floor(max));
 };
 
-const getRandomArbitrary = function (min, max) {
+const getRandomNumberFromRange = function (min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min)) + min;
 };
 
-const pins = [];
-
-const getRandomItems = function (array) {
-  const randomLength = getRandom(array.length);
-  const randomItems = [];
+const getRandomItemsFromArray = function (arr) {
+  const myArr = arr.slice(0);
+  const randomLength = getRandomNumber(myArr.length + 1);
 
   for (let i = 0; i < randomLength; i++) {
-    randomItems.push(array[i]);
+    myArr.splice(getRandomNumber(myArr.length), 1);
   }
 
-  return randomItems;
+  return myArr;
 };
 
-const createPins = function () {
+const createOffer = function () {
   const location = {
-    x: getRandomArbitrary(30, 1170),
-    y: getRandomArbitrary(160, 600),
+    x: getRandomNumberFromRange(30, 1170),
+    y: getRandomNumberFromRange(160, 600),
   };
 
   return {
     author: {
-      avatar: `img/avatars/user` + NUMBERS_AVATAR[getRandom(NUMBERS_AVATAR.length)] + `.png`,
+      avatar: `img/avatars/user` + NUMBERS_AVATAR[getRandomNumber(NUMBERS_AVATAR.length)] + `.png`,
     },
     offer: {
       title: `Заголовок!`,
       address: location.x + `, ` + location.y,
       price: 5000,
-      type: ROOMS_TYPE[getRandom(ROOMS_TYPE.length)],
+      type: ROOMS_TYPE[getRandomNumber(ROOMS_TYPE.length)],
       rooms: 3,
       guests: 3,
       checkin: `12:00`,
       checkout: `13:00`,
-      features: getRandomItems(FEATURES),
+      features: getRandomItemsFromArray(FEATURES),
       description: `Не очень длинное описание.`,
-      photos: getRandomItems(PHOTOS),
+      photos: getRandomItemsFromArray(PHOTOS),
     },
     location: location,
   };
 };
 
+mapElement.classList.remove(`map--faded`);
 
-// pins.push(createPins());
-// pins.push(createPins());
-// console.log(pins);
+pins.push(createOffer());
+
+const renderPin = function (offer) {
+  const element = pinTemplateElement.cloneNode(true);
+  const img = element.querySelector(`img`);
+
+  element.style.left = offer.location.x + PIN_WIDTH + `px`;
+  element.style.top = offer.location.y + PIN_HEIGHT + `px`;
+  img.src = offer.author.avatar;
+  img.alt = offer.offer.title;
+
+  return element;
+};
+
+mapPinsElement.appendChild(renderPin(pins[0]));
