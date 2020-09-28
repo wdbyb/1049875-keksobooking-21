@@ -89,3 +89,78 @@ for (let i = 0; i < MAX_OFFERS; i++) {
 const pinsFragment = renderPins(pins);
 
 mapPinsElement.appendChild(pinsFragment);
+
+console.log(1);
+
+const cardTemplateElement = document.querySelector(`#card`).content.querySelector(`.popup`);
+
+const renderCard = function (offer) {
+  const element = cardTemplateElement.cloneNode(true);
+  const titleElement = element.querySelector(`.popup__title`);
+  const addressElement = element.querySelector(`.popup__text--address`);
+  const priceElement = element.querySelector(`.popup__text--price`);
+  const typeElement = element.querySelector(`.popup__type`);
+  const capacityElement = element.querySelector(`.popup__text--capacity`);
+  const timeElement = element.querySelector(`.popup__text--time`);
+  const featuresElement = element.querySelector(`.popup__features`);
+  const descriptionElement = element.querySelector(`.popup__description`);
+
+  const avatarElement = element.querySelector(`.popup__avatar`);
+
+  const photosElement = element.querySelector(`.popup__photos`);
+  const photoElement = photosElement.querySelector(`.popup__photo`);
+
+  if (offer.offer.photos.length !== 0) {
+    for (let i = 0; i < offer.offer.photos.length - 1; i++) {
+      photosElement.appendChild(photoElement.cloneNode(true));
+    }
+
+    const photoElements = photosElement.querySelectorAll(`.popup__photo`);
+
+    for (let i = 0; i < offer.offer.photos.length; i++) {
+      photoElements[i].src = offer.offer.photos[i];
+    }
+  } else {
+    photoElement.classList.add(`hidden`);
+  }
+
+  if (offer.offer.title !== undefined) {
+    titleElement.textContent = offer.offer.title;
+  } else {
+    titleElement.classList.add(`hidden`);
+  }
+
+  if (offer.offer.address !== undefined) {
+    addressElement.textContent = offer.offer.address;
+  }
+
+  if (offer.offer.price !== undefined) {
+    priceElement.textContent = offer.offer.price + `₽/ночь`;
+  }
+
+  if (offer.offer.rooms && offer.offer.guests !== undefined) {
+    capacityElement.textContent = offer.offer.rooms + ` комнаты для ` + offer.offer.guests + ` гостей`;
+  }
+
+  if (offer.offer.checkin && offer.offer.checkout !== undefined) {
+    timeElement.textContent = `Заезд после ` + offer.offer.checkin + `, выезд до ` + offer.offer.checkout;
+  }
+
+  if (offer.offer.features.length !== 0) {
+    featuresElement.textContent = offer.offer.features;
+  }
+
+  if (offer.offer.description !== undefined) {
+    descriptionElement.textContent = offer.offer.description;
+  }
+
+  if (offer.author.avatar !== undefined) {
+    avatarElement.src = offer.author.avatar;
+  }
+
+  return element;
+};
+
+console.log(pins[0]);
+
+mapPinsElement.appendChild(renderCard(pins[0]));
