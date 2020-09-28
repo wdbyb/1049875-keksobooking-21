@@ -1,3 +1,5 @@
+'use strict';
+
 const mapElement = document.querySelector(`.map`);
 const pinTemplateElement = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
 const mapPinsElement = document.querySelector(`.map__pins`);
@@ -54,7 +56,7 @@ const createOffer = function () {
       description: `Не очень длинное описание.`,
       photos: getRandomItemsFromArray(PHOTOS),
     },
-    location: location,
+    location,
   };
 };
 
