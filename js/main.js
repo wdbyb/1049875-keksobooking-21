@@ -7,6 +7,7 @@ const PHOTOS = [`http://o0.github.io/assets/images/tokyo/hotel1.jpg`, `http://o0
 const NUMBERS_AVATAR = [`01`, `02`, `03`, `04`, `05`, `06`, `07`, `08`];
 const PIN_WIDTH = 40 / 2;
 const PIN_HEIGHT = 40;
+const MAX_OFFERS = 8;
 const pins = [];
 
 const getRandomNumber = function (max) {
@@ -57,9 +58,13 @@ const createOffer = function () {
   };
 };
 
-mapElement.classList.remove(`map--faded`);
+const renderPins = function (arr) {
+  const fragment = document.createDocumentFragment();
 
-pins.push(createOffer());
+  arr.forEach((element) => fragment.appendChild(renderPin(element)));
+
+  return fragment;
+};
 
 const renderPin = function (offer) {
   const element = pinTemplateElement.cloneNode(true);
@@ -73,4 +78,12 @@ const renderPin = function (offer) {
   return element;
 };
 
-mapPinsElement.appendChild(renderPin(pins[0]));
+mapElement.classList.remove(`map--faded`);
+
+for (let i = 0; i < MAX_OFFERS; i++) {
+  pins.push(createOffer());
+}
+
+const pinsFragment = renderPins(pins);
+
+mapPinsElement.appendChild(pinsFragment);
