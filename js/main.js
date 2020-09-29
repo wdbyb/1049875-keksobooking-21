@@ -2,7 +2,9 @@
 
 const mapElement = document.querySelector(`.map`);
 const pinTemplateElement = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
+const cardTemplateElement = document.querySelector(`#card`).content.querySelector(`.popup`);
 const mapPinsElement = document.querySelector(`.map__pins`);
+const filtersContainerElement = mapElement.querySelector(`.map__filters-container`);
 const ROOMS_TYPE = [`palace`, `flat`, `house`, `bungalow`];
 const FEATURES = [`wifi`, `dishwasher`, `parking`, `washer`, `elevator`, `conditioner`];
 const PHOTOS = [`http://o0.github.io/assets/images/tokyo/hotel1.jpg`, `http://o0.github.io/assets/images/tokyo/hotel2.jpg`, `http://o0.github.io/assets/images/tokyo/hotel3.jpg`];
@@ -60,41 +62,19 @@ const createOffer = function () {
   };
 };
 
-const renderPins = function (arr) {
-  const fragment = document.createDocumentFragment();
-
-  arr.forEach((element) => fragment.appendChild(renderPin(element)));
-
-  return fragment;
-};
-
-const renderPin = function (offer) {
+const renderPin = function (ad) {
   const element = pinTemplateElement.cloneNode(true);
   const img = element.querySelector(`img`);
 
-  element.style.left = offer.location.x + PIN_WIDTH + `px`;
-  element.style.top = offer.location.y + PIN_HEIGHT + `px`;
-  img.src = offer.author.avatar;
-  img.alt = offer.offer.title;
+  element.style.left = ad.location.x + PIN_WIDTH + `px`;
+  element.style.top = ad.location.y + PIN_HEIGHT + `px`;
+  img.src = ad.author.avatar;
+  img.alt = ad.offer.title;
 
   return element;
 };
 
-mapElement.classList.remove(`map--faded`);
-
-for (let i = 0; i < MAX_OFFERS; i++) {
-  pins.push(createOffer());
-}
-
-const pinsFragment = renderPins(pins);
-
-mapPinsElement.appendChild(pinsFragment);
-
-console.log(1);
-
-const cardTemplateElement = document.querySelector(`#card`).content.querySelector(`.popup`);
-
-const renderCard = function (offer) {
+const renderCard = function (ad) {
   const element = cardTemplateElement.cloneNode(true);
   const titleElement = element.querySelector(`.popup__title`);
   const addressElement = element.querySelector(`.popup__text--address`);
@@ -104,63 +84,91 @@ const renderCard = function (offer) {
   const timeElement = element.querySelector(`.popup__text--time`);
   const featuresElement = element.querySelector(`.popup__features`);
   const descriptionElement = element.querySelector(`.popup__description`);
-
   const avatarElement = element.querySelector(`.popup__avatar`);
-
   const photosElement = element.querySelector(`.popup__photos`);
   const photoElement = photosElement.querySelector(`.popup__photo`);
+  const featuresElements = featuresElement.querySelectorAll(`li`);
 
-  if (offer.offer.photos.length !== 0) {
-    for (let i = 0; i < offer.offer.photos.length - 1; i++) {
-      photosElement.appendChild(photoElement.cloneNode(true));
-    }
+  addressElement.textContent = ad.offer.address;
+  priceElement.textContent = ad.offer.price + `₽/ночь`;
+  titleElement.textContent = ad.offer.title;
+  capacityElement.textContent = ad.offer.rooms + ` комнаты для ` + ad.offer.guests + ` гостей`;
+  timeElement.textContent = `Заезд после ` + ad.offer.checkin + `, выезд до ` + ad.offer.checkout;
+  descriptionElement.textContent = ad.offer.description;
+  avatarElement.src = ad.author.avatar;
 
-    const photoElements = photosElement.querySelectorAll(`.popup__photo`);
+  switch (ad.offer.type) {
+    case `flat`:
+      typeElement.textContent = `Квартира`;
+      break;
 
-    for (let i = 0; i < offer.offer.photos.length; i++) {
-      photoElements[i].src = offer.offer.photos[i];
-    }
-  } else {
-    photoElement.classList.add(`hidden`);
+    case `bungalow`:
+      typeElement.textContent = `Бунгало`;
+      break;
+
+    case `house`:
+      typeElement.textContent = `Дом`;
+      break;
+
+    case `palace`:
+      typeElement.textContent = `Дворец`;
+      break;
   }
 
-  if (offer.offer.title !== undefined) {
-    titleElement.textContent = offer.offer.title;
-  } else {
-    titleElement.classList.add(`hidden`);
+  for (let i = 0; i < ad.offer.photos.length - 1; i++) {
+    photosElement.appendChild(photoElement.cloneNode(true));
   }
 
-  if (offer.offer.address !== undefined) {
-    addressElement.textContent = offer.offer.address;
+  const photoElements = photosElement.querySelectorAll(`.popup__photo`);
+
+  for (let i = 0; i < ad.offer.photos.length; i++) {
+    photoElements[i].src = ad.offer.photos[i];
   }
 
-  if (offer.offer.price !== undefined) {
-    priceElement.textContent = offer.offer.price + `₽/ночь`;
+  if (ad.offer.photos.length === 0) {
+    photosElement.classList.add(`hidden`);
   }
 
-  if (offer.offer.rooms && offer.offer.guests !== undefined) {
-    capacityElement.textContent = offer.offer.rooms + ` комнаты для ` + offer.offer.guests + ` гостей`;
-  }
+  featuresElements.forEach(function (feature) {
+    feature.classList.add(`hidden`);
+  });
 
-  if (offer.offer.checkin && offer.offer.checkout !== undefined) {
-    timeElement.textContent = `Заезд после ` + offer.offer.checkin + `, выезд до ` + offer.offer.checkout;
-  }
-
-  if (offer.offer.features.length !== 0) {
-    featuresElement.textContent = offer.offer.features;
-  }
-
-  if (offer.offer.description !== undefined) {
-    descriptionElement.textContent = offer.offer.description;
-  }
-
-  if (offer.author.avatar !== undefined) {
-    avatarElement.src = offer.author.avatar;
-  }
+  ad.offer.features.forEach(function (feature) {
+    featuresElement.querySelector(`.popup__feature--` + feature).classList.remove(`hidden`);
+  });
 
   return element;
 };
 
-console.log(pins[0]);
+const renderPins = function (arr) {
+  const fragment = document.createDocumentFragment();
 
-mapPinsElement.appendChild(renderCard(pins[0]));
+  arr.forEach(function (element) {
+    fragment.appendChild(renderPin(element));
+  });
+
+  return fragment;
+};
+
+const renderCards = function (arr) {
+  const fragment = document.createDocumentFragment();
+
+  arr.forEach(function (element) {
+    fragment.appendChild(renderCard(element));
+  });
+
+  return fragment;
+};
+
+mapElement.classList.remove(`map--faded`);
+
+for (let i = 0; i < MAX_OFFERS; i++) {
+  pins.push(createOffer());
+}
+
+const pinsFragment = renderPins(pins);
+const cardsFragment = renderCards(pins);
+
+mapPinsElement.appendChild(pinsFragment);
+
+mapElement.insertBefore(cardsFragment, filtersContainerElement);
