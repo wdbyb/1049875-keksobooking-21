@@ -86,8 +86,14 @@ const renderCard = function (ad) {
   const descriptionElement = element.querySelector(`.popup__description`);
   const avatarElement = element.querySelector(`.popup__avatar`);
   const photosElement = element.querySelector(`.popup__photos`);
-  const photoElement = photosElement.querySelector(`.popup__photo`);
-  const featuresElements = featuresElement.querySelectorAll(`li`);
+  const photoTemplateElement = photosElement.querySelector(`.popup__photo`);
+  const featuresElements = featuresElement.querySelectorAll(`.popup__feature`);
+  const offerTypes = {
+    flat: `Квартира`,
+    bungalow: `Бунгало`,
+    house: `Дом`,
+    palace: `Дворец`,
+  };
 
   addressElement.textContent = ad.offer.address;
   priceElement.textContent = ad.offer.price + `₽/ночь`;
@@ -96,42 +102,15 @@ const renderCard = function (ad) {
   timeElement.textContent = `Заезд после ` + ad.offer.checkin + `, выезд до ` + ad.offer.checkout;
   descriptionElement.textContent = ad.offer.description;
   avatarElement.src = ad.author.avatar;
+  typeElement.textContent = offerTypes[ad.offer.type];
 
-  switch (ad.offer.type) {
-    case `flat`:
-      typeElement.textContent = `Квартира`;
-      break;
-
-    case `bungalow`:
-      typeElement.textContent = `Бунгало`;
-      break;
-
-    case `house`:
-      typeElement.textContent = `Дом`;
-      break;
-
-    case `palace`:
-      typeElement.textContent = `Дворец`;
-      break;
-  }
-
-  for (let i = 0; i < ad.offer.photos.length - 1; i++) {
-    photosElement.appendChild(photoElement.cloneNode(true));
-  }
-
-  const photoElements = photosElement.querySelectorAll(`.popup__photo`);
-
-  for (let i = 0; i < ad.offer.photos.length; i++) {
-    photoElements[i].src = ad.offer.photos[i];
-  }
-
-  if (ad.offer.photos.length === 0) {
-    photosElement.classList.add(`hidden`);
-  }
-
-  featuresElements.forEach(function (feature) {
-    feature.classList.add(`hidden`);
+  ad.offer.photos.forEach(photo => {
+    const photoElement = photoTemplateElement.cloneNode(true);
+    photoElement.src = photo;
+    photosElement.appendChild(photoElement);
   });
+
+  photoTemplateElement.remove();
 
   ad.offer.features.forEach(function (feature) {
     featuresElement.querySelector(`.popup__feature--` + feature).classList.remove(`hidden`);
