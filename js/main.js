@@ -87,7 +87,6 @@ const renderCard = function (ad) {
   const avatarElement = element.querySelector(`.popup__avatar`);
   const photosElement = element.querySelector(`.popup__photos`);
   const photoTemplateElement = photosElement.querySelector(`.popup__photo`);
-  const featuresElements = featuresElement.querySelectorAll(`.popup__feature`);
   const offerTypes = {
     flat: `Квартира`,
     bungalow: `Бунгало`,
@@ -104,7 +103,7 @@ const renderCard = function (ad) {
   avatarElement.src = ad.author.avatar;
   typeElement.textContent = offerTypes[ad.offer.type];
 
-  ad.offer.photos.forEach(photo => {
+  ad.offer.photos.forEach((photo) => {
     const photoElement = photoTemplateElement.cloneNode(true);
     photoElement.src = photo;
     photosElement.appendChild(photoElement);
