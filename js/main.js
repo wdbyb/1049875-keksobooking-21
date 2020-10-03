@@ -2,7 +2,9 @@
 
 const mapElement = document.querySelector(`.map`);
 const pinTemplateElement = document.querySelector(`#pin`).content.querySelector(`.map__pin`);
+const cardTemplateElement = document.querySelector(`#card`).content.querySelector(`.popup`);
 const mapPinsElement = document.querySelector(`.map__pins`);
+const filtersContainerElement = mapElement.querySelector(`.map__filters-container`);
 const ROOMS_TYPE = [`palace`, `flat`, `house`, `bungalow`];
 const FEATURES = [`wifi`, `dishwasher`, `parking`, `washer`, `elevator`, `conditioner`];
 const PHOTOS = [`http://o0.github.io/assets/images/tokyo/hotel1.jpg`, `http://o0.github.io/assets/images/tokyo/hotel2.jpg`, `http://o0.github.io/assets/images/tokyo/hotel3.jpg`];
@@ -60,24 +62,80 @@ const createOffer = function () {
   };
 };
 
+const renderPin = function (ad) {
+  const element = pinTemplateElement.cloneNode(true);
+  const img = element.querySelector(`img`);
+
+  element.style.left = ad.location.x + PIN_WIDTH + `px`;
+  element.style.top = ad.location.y + PIN_HEIGHT + `px`;
+  img.src = ad.author.avatar;
+  img.alt = ad.offer.title;
+
+  return element;
+};
+
+const renderCard = function (ad) {
+  const element = cardTemplateElement.cloneNode(true);
+  const titleElement = element.querySelector(`.popup__title`);
+  const addressElement = element.querySelector(`.popup__text--address`);
+  const priceElement = element.querySelector(`.popup__text--price`);
+  const typeElement = element.querySelector(`.popup__type`);
+  const capacityElement = element.querySelector(`.popup__text--capacity`);
+  const timeElement = element.querySelector(`.popup__text--time`);
+  const featuresElement = element.querySelector(`.popup__features`);
+  const descriptionElement = element.querySelector(`.popup__description`);
+  const avatarElement = element.querySelector(`.popup__avatar`);
+  const photosElement = element.querySelector(`.popup__photos`);
+  const photoTemplateElement = photosElement.querySelector(`.popup__photo`);
+  const offerTypes = {
+    flat: `Квартира`,
+    bungalow: `Бунгало`,
+    house: `Дом`,
+    palace: `Дворец`,
+  };
+
+  addressElement.textContent = ad.offer.address;
+  priceElement.textContent = ad.offer.price + `₽/ночь`;
+  titleElement.textContent = ad.offer.title;
+  capacityElement.textContent = ad.offer.rooms + ` комнаты для ` + ad.offer.guests + ` гостей`;
+  timeElement.textContent = `Заезд после ` + ad.offer.checkin + `, выезд до ` + ad.offer.checkout;
+  descriptionElement.textContent = ad.offer.description;
+  avatarElement.src = ad.author.avatar;
+  typeElement.textContent = offerTypes[ad.offer.type];
+
+  ad.offer.photos.forEach((photo) => {
+    const photoElement = photoTemplateElement.cloneNode(true);
+    photoElement.src = photo;
+    photosElement.appendChild(photoElement);
+  });
+
+  photoTemplateElement.remove();
+
+  ad.offer.features.forEach(function (feature) {
+    featuresElement.querySelector(`.popup__feature--` + feature).classList.remove(`hidden`);
+  });
+
+  return element;
+};
+
 const renderPins = function (arr) {
   const fragment = document.createDocumentFragment();
 
-  arr.forEach((element) => fragment.appendChild(renderPin(element)));
+  arr.forEach(function (element) {
+    fragment.appendChild(renderPin(element));
+  });
 
   return fragment;
 };
 
-const renderPin = function (offer) {
-  const element = pinTemplateElement.cloneNode(true);
-  const img = element.querySelector(`img`);
+const renderCards = function (arr) {
+  const fragment = document.createDocumentFragment();
 
-  element.style.left = offer.location.x + PIN_WIDTH + `px`;
-  element.style.top = offer.location.y + PIN_HEIGHT + `px`;
-  img.src = offer.author.avatar;
-  img.alt = offer.offer.title;
+  arr.forEach(function (element) {
+    fragment.appendChild(renderCard(element));
+  });
 
-  return element;
+  return fragment;
 };
 
 mapElement.classList.remove(`map--faded`);
@@ -87,5 +145,8 @@ for (let i = 0; i < MAX_OFFERS; i++) {
 }
 
 const pinsFragment = renderPins(pins);
+const cardsFragment = renderCards(pins);
 
 mapPinsElement.appendChild(pinsFragment);
+
+mapElement.insertBefore(cardsFragment, filtersContainerElement);
