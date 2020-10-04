@@ -138,8 +138,6 @@ const renderCards = function (arr) {
   return fragment;
 };
 
-mapElement.classList.remove(`map--faded`);
-
 for (let i = 0; i < MAX_OFFERS; i++) {
   pins.push(createOffer());
 }
@@ -149,4 +147,39 @@ const cardsFragment = renderCards(pins);
 
 mapPinsElement.appendChild(pinsFragment);
 
-mapElement.insertBefore(cardsFragment, filtersContainerElement);
+const mapPinMainElement = document.querySelector(`.map__pin--main`);
+
+mapPinMainElement.addEventListener(`mousedown`, function (evt) {
+  if (evt.button === 0) {
+    mapElement.classList.remove(`map--faded`);
+  }
+  inputAddressElement.setAttribute(`placeholder`, `300, 200`);
+});
+
+mapPinMainElement.addEventListener(`keydown`, function (evt) {
+  if (evt.key === `Enter`) {
+    mapElement.classList.remove(`map--faded`);
+  }
+
+});
+
+
+
+const inputAddressElement = document.querySelector(`#address`);
+const inputTypeElement = document.querySelector(`#type`);
+const inputPriceElement = document.querySelector(`#price`);
+const adFormElement = document.querySelector(`.ad-form`);
+
+adFormElement.classList.remove(`ad-form--disabled`);
+
+inputTypeElement.addEventListener(`change`, function () {
+  console.log(inputTypeElement.value);
+  if (inputTypeElement.value === 'bungalow') {
+    inputPriceElement.setAttribute(`placeholder`, 0);
+    inputPriceElement.setAttribute(`min`, 0);
+  }
+});
+
+
+
+// mapElement.insertBefore(cardsFragment, filtersContainerElement);
