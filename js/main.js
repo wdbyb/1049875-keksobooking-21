@@ -20,15 +20,10 @@ const formAddressElement = document.querySelector(`#address`);
 const formTypeElement = document.querySelector(`#type`);
 const formPriceElement = document.querySelector(`#price`);
 const adFormElement = document.querySelector(`.ad-form`);
-const formAvatarElement = document.querySelector(`#avatar`);
-const formTitleElement = document.querySelector(`#title`);
 const formTimeinElement = document.querySelector(`#timein`);
 const formTimeoutElement = document.querySelector(`#timeout`);
 const formRoomCapacityElement = document.querySelector(`#capacity`);
 const formRoomNumberElement = document.querySelector(`#room_number`);
-const formDescriptionElement = document.querySelector(`#description`);
-const formImagesElement = document.querySelector(`#images`);
-const formSubmitButtonElement = document.querySelector(`.ad-form__submit`);
 const mapFeaturesElement = document.querySelector(`.map__features`);
 const formAllFieldsetsElements = adFormElement.querySelectorAll(`.ad-form__element`);
 const formHeaderFieldsetElement = adFormElement.querySelector(`.ad-form-header`);
@@ -175,16 +170,16 @@ function changeTwoElementValue(change, changer) {
 }
 
 function onRoomNumberChange() {
-  if (formRoomCapacityElement.value === '0' && formRoomNumberElement.value !== '100') {
-    formRoomNumberElement.setCustomValidity('Только 100 комнат!');
-  } else if (formRoomNumberElement.value === '100' && formRoomCapacityElement.value !== '0') {
-    formRoomCapacityElement.setCustomValidity('Не для гостей');
+  if (formRoomCapacityElement.value === `0` && formRoomNumberElement.value !== `100`) {
+    formRoomNumberElement.setCustomValidity(`Только 100 комнат!`);
+  } else if (formRoomNumberElement.value === `100` && formRoomCapacityElement.value !== `0`) {
+    formRoomCapacityElement.setCustomValidity(`Не для гостей`);
   } else if (formRoomNumberElement.value < formRoomCapacityElement.value) {
-    formRoomCapacityElement.setCustomValidity('Понижай или проиграешь.');
-    formRoomNumberElement.setCustomValidity('');
+    formRoomCapacityElement.setCustomValidity(`Понижай или проиграешь.`);
+    formRoomNumberElement.setCustomValidity(``);
   } else {
-    formRoomCapacityElement.setCustomValidity('');
-    formRoomNumberElement.setCustomValidity('');
+    formRoomCapacityElement.setCustomValidity(``);
+    formRoomNumberElement.setCustomValidity(``);
   }
 }
 
@@ -210,16 +205,16 @@ function onFormTypeChange() {
 }
 
 function onRoomCapacityChange() {
-  if (formRoomCapacityElement.value === '0' && formRoomNumberElement.value !== '100') {
-    formRoomNumberElement.setCustomValidity('Только 100 комнат!');
-  } else if (formRoomNumberElement.value === '100' && formRoomCapacityElement.value !== '0') {
-    formRoomCapacityElement.setCustomValidity('Не для гостей');
+  if (formRoomCapacityElement.value === `0` && formRoomNumberElement.value !== `100`) {
+    formRoomNumberElement.setCustomValidity(`Только 100 комнат!`);
+  } else if (formRoomNumberElement.value === `100` && formRoomCapacityElement.value !== `0`) {
+    formRoomCapacityElement.setCustomValidity(`Не для гостей`);
   } else if (formRoomNumberElement.value < formRoomCapacityElement.value) {
-    formRoomCapacityElement.setCustomValidity('Понижай или проиграешь.');
-    formRoomNumberElement.setCustomValidity('');
+    formRoomCapacityElement.setCustomValidity(`Понижай или проиграешь.`);
+    formRoomNumberElement.setCustomValidity(``);
   } else {
-    formRoomCapacityElement.setCustomValidity('');
-    formRoomNumberElement.setCustomValidity('');
+    formRoomCapacityElement.setCustomValidity(``);
+    formRoomNumberElement.setCustomValidity(``);
   }
 }
 
@@ -238,8 +233,8 @@ for (let i = 0; i < MAX_OFFERS; i++) {
 const pinsFragment = renderPins(pins);
 const cardsFragment = renderCards(pins);
 
-// mapPinsElement.appendChild(pinsFragment);
-// mapElement.insertBefore(cardsFragment, filtersContainerElement);
+mapPinsElement.appendChild(pinsFragment);
+mapElement.insertBefore(cardsFragment, filtersContainerElement);
 
 elementsDisableEnable.push(mapFeaturesElement, formHeaderFieldsetElement);
 
