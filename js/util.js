@@ -22,9 +22,14 @@
     return myArr;
   }
 
+  function toggleDisabled(element, state) {
+    element.toggleAttribute(`disabled`, state);
+  }
+
   window.util = {
     getRandomNumber: getRandomNumber,
     getRandomNumberFromRange: getRandomNumberFromRange,
-    getRandomItemsFromArray: getRandomItemsFromArray
+    getRandomItemsFromArray: getRandomItemsFromArray,
+    toggleDisabled: toggleDisabled,
   };
 })();

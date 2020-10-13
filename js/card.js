@@ -4,25 +4,19 @@
   const cardTemplateElement = document.querySelector(`#card`).content.querySelector(`.popup`);
 
   function renderCard(ad) {
-    const element = cardTemplateElement.cloneNode(true);
-    const titleElement = element.querySelector(`.popup__title`);
-    const addressElement = element.querySelector(`.popup__text--address`);
-    const priceElement = element.querySelector(`.popup__text--price`);
-    const typeElement = element.querySelector(`.popup__type`);
-    const capacityElement = element.querySelector(`.popup__text--capacity`);
-    const timeElement = element.querySelector(`.popup__text--time`);
-    const featuresElement = element.querySelector(`.popup__features`);
-    const descriptionElement = element.querySelector(`.popup__description`);
-    const avatarElement = element.querySelector(`.popup__avatar`);
-    const photosElement = element.querySelector(`.popup__photos`);
+    const cardElement = cardTemplateElement.cloneNode(true);
+    const titleElement = cardElement.querySelector(`.popup__title`);
+    const addressElement = cardElement.querySelector(`.popup__text--address`);
+    const priceElement = cardElement.querySelector(`.popup__text--price`);
+    const typeElement = cardElement.querySelector(`.popup__type`);
+    const capacityElement = cardElement.querySelector(`.popup__text--capacity`);
+    const timeElement = cardElement.querySelector(`.popup__text--time`);
+    const featuresElement = cardElement.querySelector(`.popup__features`);
+    const descriptionElement = cardElement.querySelector(`.popup__description`);
+    const avatarElement = cardElement.querySelector(`.popup__avatar`);
+    const photosElement = cardElement.querySelector(`.popup__photos`);
     const photoTemplateElement = photosElement.querySelector(`.popup__photo`);
-    const popupCloseElement = element.querySelector(`.popup__close`);
-    const offerTypes = {
-      flat: `Квартира`,
-      bungalow: `Бунгало`,
-      house: `Дом`,
-      palace: `Дворец`,
-    };
+    const popupCloseElement = cardElement.querySelector(`.popup__close`);
 
     addressElement.textContent = ad.offer.address;
     priceElement.textContent = ad.offer.price + `₽/ночь`;
@@ -31,7 +25,7 @@
     timeElement.textContent = `Заезд после ` + ad.offer.checkin + `, выезд до ` + ad.offer.checkout;
     descriptionElement.textContent = ad.offer.description;
     avatarElement.src = ad.author.avatar;
-    typeElement.textContent = offerTypes[ad.offer.type];
+    typeElement.textContent = window.constants.OfferTypes[ad.offer.type];
 
     ad.offer.photos.forEach((photo) => {
       const photoElement = photoTemplateElement.cloneNode(true);
@@ -48,16 +42,16 @@
     popupCloseElement.setAttribute(`tabindex`, 0);
 
     popupCloseElement.addEventListener(`click`, function () {
-      element.classList.add(`hidden`);
+      cardElement.classList.add(`hidden`);
     });
 
     document.addEventListener(`keydown`, function (evt) {
       if (evt.key === `Escape`) {
-        element.classList.add(`hidden`);
+        cardElement.classList.add(`hidden`);
       }
     });
 
-    return element;
+    return cardElement;
   }
 
   window.card = {

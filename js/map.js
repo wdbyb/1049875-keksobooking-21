@@ -8,7 +8,20 @@
   const mapPinMainElement = mapElement.querySelector(`.map__pin--main`);
   const mapPinsElement = mapElement.querySelector(`.map__pins`);
 
+  function renderPins(arr) {
+    const fragment = document.createDocumentFragment();
+
+    arr.forEach(function (element) {
+      fragment.appendChild(window.pin.renderPin(element));
+    });
+
+    return fragment;
+  }
+
+  const pinsFragment = renderPins(window.data.offers);
+
   window.map = {
+    pinsFragment: pinsFragment,
     mapFeaturesElement: mapFeaturesElement,
     mapFiltersAllElements: mapFiltersAllElements,
     mapPinMainElement: mapPinMainElement,
