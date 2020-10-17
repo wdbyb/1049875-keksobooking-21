@@ -7,6 +7,7 @@
   const mapFeaturesElement = document.querySelector(`.map__features`);
   const mapPinMainElement = mapElement.querySelector(`.map__pin--main`);
   const mapPinsElement = mapElement.querySelector(`.map__pins`);
+  let offersData = [];
 
   function renderPins(arr) {
     const fragment = document.createDocumentFragment();
@@ -18,10 +19,22 @@
     return fragment;
   }
 
-  const pinsFragment = renderPins(window.data.offers);
+  function onDataLoadSuccess(arr) {
+    offersData = arr;
+  }
+
+  function getOffersData() {
+    window.backend.load(onDataLoadSuccess, window.errorMessage.errorHandler, false);
+  }
+
+  getOffersData();
+
+  function getPinsFragment() {
+    return renderPins(offersData);
+  }
 
   window.map = {
-    pinsFragment: pinsFragment,
+    getPinsFragment: getPinsFragment,
     mapFeaturesElement: mapFeaturesElement,
     mapFiltersAllElements: mapFiltersAllElements,
     mapPinMainElement: mapPinMainElement,

@@ -32,6 +32,10 @@
     [OfferKeyTypes.HOUSE]: `Дом`,
     [OfferKeyTypes.PALACE]: `Дворец`,
   };
+  const StatusCode = {
+    OK: 200
+  };
+  const URL = `https://21.javascript.pages.academy/keksobooking`;
 
   window.constants = {
     MIN_PRICE_BUNGALOW: MIN_PRICE_BUNGALOW,
@@ -54,5 +58,7 @@
     MAX_MAP_COORD_X: MAX_MAP_COORD_X,
     MAX_MAP_COORD_Y: MAX_MAP_COORD_Y,
     OfferTypes: OfferTypes,
+    StatusCode: StatusCode,
+    URL: URL,
   };
 })();
