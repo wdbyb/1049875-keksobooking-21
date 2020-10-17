@@ -1,13 +1,13 @@
 'use strict';
 
 (function () {
-  function listenMainPin() {
+  function onMainPinActivated() {
     window.map.mapElement.classList.remove(`map--faded`);
     window.form.adFormElement.classList.remove(`ad-form--disabled`);
     window.main.elementsDisableEnable.forEach(function (element) {
       window.util.toggleDisabled(element, false);
     });
-    window.map.mapPinsElement.appendChild(window.map.pinsFragment);
+    window.map.mapPinsElement.appendChild(window.map.getPinsFragment());
     window.form.formAddressElement.setAttribute(`placeholder`, window.form.formAddressX + `, ` + window.form.formAddressY);
     window.form.formTimeinElement.addEventListener(`change`, window.form.onTimeinChange);
     window.form.formTimeoutElement.addEventListener(`change`, window.form.onTimeoutChange);
@@ -17,6 +17,6 @@
   }
 
   window.mainPinListener = {
-    listenMainPin: listenMainPin,
+    onMainPinActivated: onMainPinActivated,
   };
 })();
