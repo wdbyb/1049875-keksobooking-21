@@ -9,9 +9,12 @@
   function renderPins(arr) {
     const fragment = document.createDocumentFragment();
 
-    arr.forEach(function (element) {
-      fragment.appendChild(window.pin.renderPin(element));
-    });
+    for (let i = 0; ; i++) {
+      if (i === arr.length || i === window.constants.MAX_OFFERS) {
+        break;
+      }
+      fragment.appendChild(window.pin.renderPin(arr[i]));
+    }
 
     return fragment;
   }
@@ -30,7 +33,13 @@
     return renderPins(offersData);
   }
 
+  function getOffersPlease() {
+    return offersData;
+  }
+
   window.map = {
+    renderPins: renderPins,
+    getOffersPlease: getOffersPlease,
     getPinsFragment: getPinsFragment,
     mapPinMainElement: mapPinMainElement,
     mapElement: mapElement,
