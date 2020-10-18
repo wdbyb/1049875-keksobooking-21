@@ -1,22 +1,6 @@
 'use strict';
 
 (function () {
-  const elementsDisableEnable = [];
-
-  elementsDisableEnable.push(window.map.mapFeaturesElement, window.form.formHeaderFieldsetElement);
-
-  window.map.mapFiltersAllElements.forEach(function (element) {
-    elementsDisableEnable.push(element);
-  });
-
-  window.form.formAllFieldsetsElements.forEach(function (element) {
-    elementsDisableEnable.push(element);
-  });
-
-  elementsDisableEnable.forEach(function (element) {
-    window.util.toggleDisabled(element, true);
-  });
-
   window.map.mapPinMainElement.addEventListener(`mousedown`, function (evt) {
     if (evt.button === 0) {
       window.mainPinListener.onMainPinActivated();
@@ -28,8 +12,4 @@
       window.mainPinListener.onMainPinActivated();
     }
   });
-
-  window.main = {
-    elementsDisableEnable: elementsDisableEnable,
-  };
 })();
