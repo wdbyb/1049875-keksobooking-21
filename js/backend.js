@@ -10,7 +10,7 @@
       if (xhr.status === window.constants.StatusCode.OK) {
         onSuccess(xhr.response);
         if (isForm) {
-          xhr.timeout = 5000;
+          window.formMessages.showSuccessFormMessage();
         }
       } else {
         onError(`Статус ответа: ` + xhr.status + ` ` + xhr.statusText, selector, positionMessage);
