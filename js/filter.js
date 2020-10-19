@@ -14,17 +14,9 @@
       }
     });
 
-    const mapPinsElements = document.querySelectorAll(`.map__pin:not(.map__pin--main)`);
+    window.util.removePinsOnMap();
 
-    mapPinsElements.forEach(function (element) {
-      element.remove();
-    });
-
-    const cardOnMapElement = document.querySelector(`.map__card`);
-
-    if (cardOnMapElement !== null) {
-      cardOnMapElement.remove();
-    }
+    window.util.removeCardOnMap();
 
     const fragment = window.map.renderPins(sameHouseTypeOffers);
 

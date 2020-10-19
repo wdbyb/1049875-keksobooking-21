@@ -1,6 +1,8 @@
 'use strict';
 
 (function () {
+  const mapElement = document.querySelector(`.map`);
+
   function getRandomNumber(max) {
     return Math.floor(Math.random() * Math.floor(max));
   }
@@ -26,10 +28,28 @@
     element.toggleAttribute(`disabled`, state);
   }
 
+  function removeCardOnMap() {
+    const cardOnMapElement = mapElement.querySelector(`.map__card`);
+
+    if (cardOnMapElement !== null) {
+      cardOnMapElement.remove();
+    }
+  }
+
+  function removePinsOnMap() {
+    const pinsOnMapElements = mapElement.querySelectorAll(`.map__pin:not(.map__pin--main)`);
+
+    pinsOnMapElements.forEach(function (element) {
+      element.remove();
+    });
+  }
+
   window.util = {
     getRandomNumber: getRandomNumber,
     getRandomNumberFromRange: getRandomNumberFromRange,
     getRandomItemsFromArray: getRandomItemsFromArray,
     toggleDisabled: toggleDisabled,
+    removeCardOnMap: removeCardOnMap,
+    removePinsOnMap: removePinsOnMap,
   };
 })();

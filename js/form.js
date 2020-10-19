@@ -88,10 +88,8 @@
     window.resetPage.elementsDisableEnable.forEach(function (element) {
       window.util.toggleDisabled(element, true);
     });
-    const mapPinsElements = mapElement.querySelectorAll(`.map__pin:not(.map__pin--main)`);
-    mapPinsElements.forEach(function (element) {
-      element.remove();
-    });
+    window.util.removeCardOnMap();
+    window.util.removePinsOnMap();
   }
 
   adFormElement.addEventListener(`submit`, function (evt) {

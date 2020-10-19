@@ -15,11 +15,7 @@
     img.alt = ad.offer.title;
 
     pinElement.addEventListener(`click`, function () {
-      const cardOnMapElement = mapElement.querySelector(`.map__card`);
-
-      if (cardOnMapElement !== null) {
-        cardOnMapElement.remove();
-      }
+      window.util.removeCardOnMap();
 
       mapElement.insertBefore(window.card.renderCard(ad), filtersContainerElement);
     });
