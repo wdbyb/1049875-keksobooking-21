@@ -23,7 +23,33 @@
     window.util.toggleDisabled(element, true);
   });
 
+  function removeCardOnMap() {
+    const cardOnMapElement = mapElement.querySelector(`.map__card`);
+
+    if (cardOnMapElement !== null) {
+      cardOnMapElement.remove();
+    }
+  }
+
+  function removePinsOnMap() {
+    const pinsOnMapElements = mapElement.querySelectorAll(`.map__pin:not(.map__pin--main)`);
+
+    pinsOnMapElements.forEach(function (element) {
+      element.remove();
+    });
+  }
+
+  function setMainPinCenter() {
+    const mainPinElement = document.querySelector(`.map__pin--main`);
+
+    mainPinElement.style.left = `570px`;
+    mainPinElement.style.top = `375px`;
+  }
+
   window.resetPage = {
     elementsDisableEnable: elementsDisableEnable,
+    removeCardOnMap: removeCardOnMap,
+    removePinsOnMap: removePinsOnMap,
+    setMainPinCenter: setMainPinCenter,
   };
 })();

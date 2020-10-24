@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  window.map.mapPinMainElement.addEventListener(`mousedown`, function (evt) {
+  window.map.mapPinMainElement.addEventListener(`click`, function (evt) {
     if (evt.button === 0) {
       window.mainPinListener.onMainPinActivated();
     }

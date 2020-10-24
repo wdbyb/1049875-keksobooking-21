@@ -9,12 +9,9 @@
   function renderPins(arr) {
     const fragment = document.createDocumentFragment();
 
-    for (let i = 0; ; i++) {
-      if (i === arr.length || i === window.constants.MAX_OFFERS) {
-        break;
-      }
-      fragment.appendChild(window.pin.renderPin(arr[i]));
-    }
+    arr.slice(0, window.constants.MAX_OFFERS).forEach(function (element) {
+      fragment.appendChild(window.pin.renderPin(element));
+    });
 
     return fragment;
   }
