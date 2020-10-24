@@ -11,12 +11,12 @@
       return element.offer.type === foo[`housing-type`] || foo[`housing-type`] === `any`;
     }).filter(function (element) {
       switch (foo[`housing-price`]) {
-        case `low`:
-          return element.offer.price < 10000;
-        case `middle`:
-          return element.offer.price >= 10000 && element.offer.price <= 50000;
-        case `high`:
-          return element.offer.price > 50000;
+        case window.constants.HousingPrice.LOW:
+          return element.offer.price < window.constants.HOUSE_PRICE_MIN;
+        case window.constants.HousingPrice.MIDDLE:
+          return element.offer.price >= window.constants.HOUSE_PRICE_MIN && element.offer.price <= window.constants.HOUSE_PRICE_MAX;
+        case window.constants.HousingPrice.HIGH:
+          return element.offer.price > window.constants.HOUSE_PRICE_MAX;
         default:
           return element;
       }
