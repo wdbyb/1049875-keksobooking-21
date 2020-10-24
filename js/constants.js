@@ -43,8 +43,13 @@
     MIDDLE: `middle`,
     HIGH: `high`
   };
+  const MainPinDefaultPosition = {
+    X: 570,
+    Y: 375,
+  };
 
   window.constants = {
+    MainPinDefaultPosition: MainPinDefaultPosition,
     HousingPrice: HousingPrice,
     HOUSE_PRICE_MIN: HOUSE_PRICE_MIN,
     HOUSE_PRICE_MAX: HOUSE_PRICE_MAX,

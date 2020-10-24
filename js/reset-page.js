@@ -42,8 +42,8 @@
   function setMainPinCenter() {
     const mainPinElement = document.querySelector(`.map__pin--main`);
 
-    mainPinElement.style.left = `570px`;
-    mainPinElement.style.top = `375px`;
+    mainPinElement.style.left = window.constants.MainPinDefaultPosition.X + `px`;
+    mainPinElement.style.top = window.constants.MainPinDefaultPosition.Y + `px`;
   }
 
   window.resetPage = {
