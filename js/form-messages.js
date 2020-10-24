@@ -23,8 +23,6 @@
     });
   }
 
-  // showSuccessFormMessage();
-
   function showErrorFormMessage() {
     formErrorMessageElement.classList.remove(`hidden`);
 
@@ -37,13 +35,7 @@
     document.addEventListener(`click`, function () {
       formErrorMessageElement.classList.add(`hidden`);
     });
-
-    // formErrorButtonElement.addEventListener(`click`, function () {
-    //   formSuccessMessageElement.classList.add(`hidden`);
-    // });
   }
-  // document.querySelector(`main`).appendChild(formSuccessMessageElement);
-  // document.querySelector(`main`).appendChild(formErrorMessageElement);
 
   window.formMessages = {
     showSuccessFormMessage: showSuccessFormMessage,

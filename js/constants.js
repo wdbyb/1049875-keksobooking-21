@@ -36,8 +36,23 @@
     OK: 200
   };
   const URL = `https://21.javascript.pages.academy/keksobooking`;
+  const HOUSE_PRICE_MIN = 10000;
+  const HOUSE_PRICE_MAX = 50000;
+  const HousingPrice = {
+    LOW: `low`,
+    MIDDLE: `middle`,
+    HIGH: `high`
+  };
+  const MainPinDefaultPosition = {
+    X: 570,
+    Y: 375,
+  };
 
   window.constants = {
+    MainPinDefaultPosition: MainPinDefaultPosition,
+    HousingPrice: HousingPrice,
+    HOUSE_PRICE_MIN: HOUSE_PRICE_MIN,
+    HOUSE_PRICE_MAX: HOUSE_PRICE_MAX,
     MIN_PRICE_BUNGALOW: MIN_PRICE_BUNGALOW,
     MIN_PRICE_FLAT: MIN_PRICE_FLAT,
     MIN_PRICE_HOUSE: MIN_PRICE_HOUSE,

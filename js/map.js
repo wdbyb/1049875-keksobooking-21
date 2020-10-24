@@ -9,7 +9,7 @@
   function renderPins(arr) {
     const fragment = document.createDocumentFragment();
 
-    arr.forEach(function (element) {
+    arr.slice(0, window.constants.MAX_OFFERS).forEach(function (element) {
       fragment.appendChild(window.pin.renderPin(element));
     });
 
@@ -30,7 +30,13 @@
     return renderPins(offersData);
   }
 
+  function getOffersPlease() {
+    return offersData;
+  }
+
   window.map = {
+    renderPins: renderPins,
+    getOffersPlease: getOffersPlease,
     getPinsFragment: getPinsFragment,
     mapPinMainElement: mapPinMainElement,
     mapElement: mapElement,
