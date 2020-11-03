@@ -3,6 +3,7 @@
 (function () {
   const adFormElement = document.querySelector(`.ad-form`);
   const mapElement = document.querySelector(`.map`);
+  const mainPinElement = mapElement.querySelector(`.map__pin--main`);
   const mapFiltersAllElements = mapElement.querySelectorAll(`.map__filter`);
   const formAllFieldsetsElements = adFormElement.querySelectorAll(`.ad-form__element`);
   const formHeaderFieldsetElement = adFormElement.querySelector(`.ad-form-header`);
@@ -40,8 +41,6 @@
   }
 
   function setMainPinCenter() {
-    const mainPinElement = document.querySelector(`.map__pin--main`);
-
     mainPinElement.style.left = window.constants.MainPinDefaultPosition.X + `px`;
     mainPinElement.style.top = window.constants.MainPinDefaultPosition.Y + `px`;
   }

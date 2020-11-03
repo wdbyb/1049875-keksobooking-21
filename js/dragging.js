@@ -2,6 +2,8 @@
 
 (function () {
   const draggedElement = window.map.mapPinMainElement;
+  let formAddressX = parseInt(draggedElement.style.left, 10) + window.constants.MAIN_PIN_HALF_WIDTH;
+  let formAddressY = parseInt(draggedElement.style.top, 10) + window.constants.MAIN_PIN_HEIGHT;
 
   draggedElement.addEventListener(`mousedown`, function (evt) {
     evt.preventDefault();
@@ -11,8 +13,8 @@
       y: evt.clientY
     };
 
-    let formAddressX = parseInt(draggedElement.style.left, 10) + window.constants.MAIN_PIN_HALF_WIDTH;
-    let formAddressY = parseInt(draggedElement.style.top, 10) + window.constants.MAIN_PIN_HEIGHT;
+    formAddressX = parseInt(draggedElement.style.left, 10) + window.constants.MAIN_PIN_HALF_WIDTH;
+    formAddressY = parseInt(draggedElement.style.top, 10) + window.constants.MAIN_PIN_HEIGHT;
 
     window.formValidity.formAddressElement.setAttribute(`value`, formAddressX + `, ` + formAddressY);
 
@@ -27,8 +29,17 @@
         y: moveEvt.clientY
       };
 
-      draggedElement.style.top = (draggedElement.offsetTop - shift.y) + 'px';
-      draggedElement.style.left = (draggedElement.offsetLeft - shift.x) + 'px';
+      if ((draggedElement.offsetTop - shift.y) <= 130 || (draggedElement.offsetTop - shift.y) >= 630) {
+        draggedElement.style.top = draggedElement.offsetTop + 'px';
+      } else {
+        draggedElement.style.top = (draggedElement.offsetTop - shift.y) + 'px';
+      }
+
+      if ((draggedElement.offsetLeft - shift.x) <= 0 || (draggedElement.offsetLeft - shift.x) >= 1140) {
+        draggedElement.style.left = draggedElement.offsetLeft + 'px';
+      } else {
+        draggedElement.style.left = (draggedElement.offsetLeft - shift.x) + 'px';
+      }
 
       formAddressX = parseInt(draggedElement.style.left, 10) + window.constants.MAIN_PIN_HALF_WIDTH;
       formAddressY = parseInt(draggedElement.style.top, 10) + window.constants.MAIN_PIN_HEIGHT;
@@ -46,4 +57,9 @@
     document.addEventListener(`mousemove`, onMouseMove);
     document.addEventListener(`mouseup`, onMouseUp);
   });
+
+  window.dragging = {
+    formAddressX: formAddressX,
+    formAddressY: formAddressY,
+  };
 })();

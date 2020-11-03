@@ -1,15 +1,23 @@
 'use strict';
 
 (function () {
-  window.map.mapPinMainElement.addEventListener(`click`, function (evt) {
+  window.formValidity.formAddressElement.setAttribute(`value`, window.dragging.formAddressX + `, ` + window.dragging.formAddressY);
+
+  window.map.mapPinMainElement.addEventListener(`mousedown`, function (evt) {
     if (evt.button === 0) {
-      window.mainPinListener.onMainPinActivated();
+      const isPinsOnMap = window.map.mapElement.querySelector(`.map__pin:not(.map__pin--main)`);
+      if (isPinsOnMap === null) {
+        window.mainPinListener.onMainPinActivated();
+      }
     }
   });
 
   window.map.mapPinMainElement.addEventListener(`keydown`, function (evt) {
     if (evt.key === `Enter`) {
-      window.mainPinListener.onMainPinActivated();
+      const isPinsOnMap = window.map.mapElement.querySelector(`.map__pin:not(.map__pin--main)`);
+      if (isPinsOnMap === null) {
+        window.mainPinListener.onMainPinActivated();
+      }
     }
   });
 })();

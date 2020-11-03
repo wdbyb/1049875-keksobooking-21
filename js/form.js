@@ -10,6 +10,15 @@
     adFormElement.reset();
     mapFiltersElement.reset();
     window.formValidity.onFormTypeChange();
+    mapElement.classList.add(`map--faded`);
+    adFormElement.classList.add(`ad-form--disabled`);
+    window.resetPage.elementsDisableEnable.forEach(function (element) {
+      window.util.toggleDisabled(element, true);
+    });
+    window.resetPage.removeCardOnMap();
+    window.resetPage.removePinsOnMap();
+    window.resetPage.setMainPinCenter();
+    window.formValidity.formAddressElement.setAttribute(`value`, window.dragging.formAddressX + `, ` + window.dragging.formAddressY);
   });
 
   function successFormHandler() {
@@ -24,6 +33,7 @@
     window.resetPage.removeCardOnMap();
     window.resetPage.removePinsOnMap();
     window.resetPage.setMainPinCenter();
+    window.formValidity.formAddressElement.setAttribute(`value`, window.dragging.formAddressX + `, ` + window.dragging.formAddressY);
   }
 
   adFormElement.addEventListener(`submit`, function (evt) {
