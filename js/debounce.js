@@ -1,10 +1,8 @@
 'use strict';
 
 (function () {
-  var DEBOUNCE_INTERVAL = 300;
-
   window.debounce = function (cb) {
-    var lastTimeout = null;
+    let lastTimeout = null;
 
     return function (...parameters) {
       if (lastTimeout) {
@@ -12,7 +10,7 @@
       }
       lastTimeout = window.setTimeout(function () {
         cb(...parameters);
-      }, DEBOUNCE_INTERVAL);
+      }, window.constants.DEBOUNCE_INTERVAL);
     };
   };
 })();

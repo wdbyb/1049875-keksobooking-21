@@ -20,7 +20,7 @@
   const MIN_MAP_COORD_Y = 160;
   const MAX_MAP_COORD_X = 1170;
   const MAX_MAP_COORD_Y = 600;
-  const DEBOUNCE_INTERVAL = 2000;
+  const DEBOUNCE_INTERVAL = 500;
   const OfferKeyTypes = {
     FLAT: `flat`,
     BUNGALOW: `bungalow`,
