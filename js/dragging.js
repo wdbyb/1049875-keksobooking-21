@@ -29,13 +29,13 @@
         y: moveEvt.clientY
       };
 
-      if ((draggedElement.offsetTop - shift.y) <= 130 || (draggedElement.offsetTop - shift.y) >= 630) {
+      if ((draggedElement.offsetTop - shift.y) <= window.constants.MapRange.MIN_Y || (draggedElement.offsetTop - shift.y) >= window.constants.MapRange.MAX_Y) {
         draggedElement.style.top = draggedElement.offsetTop + 'px';
       } else {
         draggedElement.style.top = (draggedElement.offsetTop - shift.y) + 'px';
       }
 
-      if ((draggedElement.offsetLeft - shift.x) <= 0 || (draggedElement.offsetLeft - shift.x) >= 1140) {
+      if ((draggedElement.offsetLeft - shift.x) <= window.constants.MapRange.MIN_X || (draggedElement.offsetLeft - shift.x) >= window.constants.MapRange.MAX_X) {
         draggedElement.style.left = draggedElement.offsetLeft + 'px';
       } else {
         draggedElement.style.left = (draggedElement.offsetLeft - shift.x) + 'px';

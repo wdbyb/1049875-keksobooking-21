@@ -3,7 +3,7 @@
 (function () {
   const formElement = document.querySelector(`.map__filters`);
 
-  formElement.addEventListener(`change`, function () {
+  function filter() {
     const offers = window.map.getOffersPlease();
     const filtersFormData = Object.fromEntries(new FormData(formElement).entries());
 
@@ -45,5 +45,9 @@
     const fragment = window.map.renderPins(filteredOffers);
 
     window.map.mapPinsElement.appendChild(fragment);
-  });
+  }
+
+  const debouncedFilter = window.debounce(filter);
+
+  formElement.addEventListener(`change`, debouncedFilter);
 })();
