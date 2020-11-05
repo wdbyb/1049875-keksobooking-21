@@ -20,6 +20,7 @@
   const MIN_MAP_COORD_Y = 160;
   const MAX_MAP_COORD_X = 1170;
   const MAX_MAP_COORD_Y = 600;
+  const DEBOUNCE_INTERVAL = 500;
   const OfferKeyTypes = {
     FLAT: `flat`,
     BUNGALOW: `bungalow`,
@@ -47,8 +48,16 @@
     X: 570,
     Y: 375,
   };
+  const MapRange = {
+    MIN_X: 0,
+    MAX_X: 1140,
+    MIN_Y: 130,
+    MAX_Y: 630
+  };
 
   window.constants = {
+    DEBOUNCE_INTERVAL: DEBOUNCE_INTERVAL,
+    MapRange: MapRange,
     MainPinDefaultPosition: MainPinDefaultPosition,
     HousingPrice: HousingPrice,
     HOUSE_PRICE_MIN: HOUSE_PRICE_MIN,

@@ -6,13 +6,7 @@
   const adFormElement = document.querySelector(`.ad-form`);
   const formResetButtonElement = adFormElement.querySelector(`.ad-form__reset`);
 
-  formResetButtonElement.addEventListener(`click`, function () {
-    adFormElement.reset();
-    mapFiltersElement.reset();
-    window.formValidity.onFormTypeChange();
-  });
-
-  function successFormHandler() {
+  function turnUnactiveState() {
     adFormElement.reset();
     mapFiltersElement.reset();
     window.formValidity.onFormTypeChange();
@@ -24,6 +18,15 @@
     window.resetPage.removeCardOnMap();
     window.resetPage.removePinsOnMap();
     window.resetPage.setMainPinCenter();
+    window.formValidity.formAddressElement.setAttribute(`value`, window.dragging.formAddressX + `, ` + window.dragging.formAddressY);
+  }
+
+  formResetButtonElement.addEventListener(`click`, function () {
+    turnUnactiveState();
+  });
+
+  function successFormHandler() {
+    turnUnactiveState();
   }
 
   adFormElement.addEventListener(`submit`, function (evt) {

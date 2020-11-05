@@ -9,32 +9,38 @@
   document.querySelector(`main`).appendChild(formSuccessMessageElement).classList.add(`hidden`);
   document.querySelector(`main`).appendChild(formErrorMessageElement).classList.add(`hidden`);
 
-  function showSuccessFormMessage() {
+  function messageOnEscPress(evt) {
+    if (evt.key === `Escape`) {
+      formSuccessMessageElement.classList.add(`hidden`);
+
+      document.removeEventListener(`keydown`, messageOnEscPress);
+
+      document.removeEventListener(`click`, messageOnClick);
+    }
+  }
+
+  function messageOnClick() {
+    formSuccessMessageElement.classList.add(`hidden`);
+
+    document.removeEventListener(`keydown`, messageOnEscPress);
+
+    document.removeEventListener(`click`, messageOnClick);
+  }
+
+  function messageClose() {
     formSuccessMessageElement.classList.remove(`hidden`);
 
-    document.addEventListener(`keydown`, function (evt) {
-      if (evt.key === `Escape`) {
-        formSuccessMessageElement.classList.add(`hidden`);
-      }
-    });
+    document.addEventListener(`keydown`, messageOnEscPress);
 
-    document.addEventListener(`click`, function () {
-      formSuccessMessageElement.classList.add(`hidden`);
-    });
+    document.addEventListener(`click`, messageOnClick);
+  }
+
+  function showSuccessFormMessage() {
+    messageClose();
   }
 
   function showErrorFormMessage() {
-    formErrorMessageElement.classList.remove(`hidden`);
-
-    document.addEventListener(`keydown`, function (evt) {
-      if (evt.key === `Escape`) {
-        formErrorMessageElement.classList.add(`hidden`);
-      }
-    });
-
-    document.addEventListener(`click`, function () {
-      formErrorMessageElement.classList.add(`hidden`);
-    });
+    messageClose();
   }
 
   window.formMessages = {
